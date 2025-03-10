@@ -1,0 +1,27 @@
+<!-- 
+  @file index.html
+  @description Simple adaptive display for the Hydra Synth
+  @version 1.0.0
+  @date 2025-03-10
+  @author Caleb Finamore
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>hydra inside a webpage</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="src/style.css" />
+
+    <!-- Reference the local version of hydra-synth -->
+    <script src="node_modules/hydra-synth/dist/hydra-synth.js"></script>
+    <script src="src/index.js"></script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+/**
+ * @file style.css
+ * @description Stylesheet for the Hydra Synth webpage
+ * @version 1.0.0
+ * @date 2025-03-10
+ * @author Caleb Finamore
+ */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #000000;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
