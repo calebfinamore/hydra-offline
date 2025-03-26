@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // solid().out() clears canvas — do not remove
         solid().out();
         // Hydra Sketch goes below
+        a.setBins(10)
+        a.setCutoff(1)
+        a.setScale(5)
+        a.setSmooth(.97)
+        a.show()
+        
         osc(4, 0.1, 0.8).color(1.04, 0, -1.1)
             .rotate(0.30, 0.1).pixelate(2, 20)
             .modulate(noise(2.5), () => 1.5 * Math.sin(0.08 * time))
@@ -20,25 +26,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // solid().out() clears canvas — do not remove
         solid().out();
         // Hydra Sketch goes below
-        shape(3).add(osc(1, 0.5, 1), 1)
-            .add(o1, () => (Math.sin(time / 4) * 0.7 + 0.1))
-            .scale(() => Math.sin(time / 16)).rotate(0, -0.1)
-            .out(o1);
+        a.setBins(10)
+        a.setCutoff(1)
+        a.setScale(5)
+        a.setSmooth(.97)
+        a.show()
 
-        src(o1)
-            .rotate(0, 0.1)
-            .out();
+        osc(100, -0.0018, 0.17).diff(osc(20, 0.00008).rotate(Math.PI / 0.00003))
+            .modulateScale(noise(1.5, () => -1 + a.fft[0] * .006,).modulateScale(osc(() => a.fft[0] * .05).rotate(() => Math.sin(time / 22))), 5)
+            .color(11, 0.5, 0.4, 0.9, 0.2, 0.011, 5, 22, 0.5, -1).contrast(() => Math.pow((a.fft[9] * 10), 2))
+            .add(src(o0).modulate(o0, .04), .6, .9)
+            //.pixelate(0.4, 0.2, 0.1)
+            .invert().brightness(0.0003, 2).contrast(0.5, 2, 0.1, 2).color(4, -2, 0.1)
+            .modulateScale(osc(2), -0.2, 2, 1, 0.3)
+            .posterize(200).rotate(1, 0.2, 0.01, 0.001)
+            .color(22, -2, 0.5, 0.5, 0.0001, 0.1, 0.2, 8).contrast(0.18, 0.3, 0.1, 0.2, 0.03, 1).brightness(0.0001, -1, 10)
+            .out()
     }
 
     function hydraSketch3() {
         // solid().out() clears canvas — do not remove
         solid().out();
         // Hydra sketch goes below
-        osc(15, 0.1, 0.8)
+        a.setBins(10)
+        a.setCutoff(1)
+        a.setScale(5)
+        a.setSmooth(.97)
+        a.show()
+
+        osc(100, 0.01, 1.4)
             .rotate(0, 0.1)
-            .kaleid()
-            .color(-1, 1)
-            .out();
+            .mult(osc(10, 0.1).modulate(osc(10).rotate(0, -0.1), 1))
+            .color(() => a.fft[2] * 4, () => a.fft[4] * 4, () => a.fft[6] * 4)
+            .out(o0)
     }
 
     // initializes hydra, calls patches, and manages switching
@@ -51,7 +71,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // create a new Hydra Synth instance
         var hydra = new Hydra({
             canvas: myCanvas,
-            detectAudio: false,
+            detectAudio: true,
 
         });
 
