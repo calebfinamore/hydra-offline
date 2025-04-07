@@ -1,5 +1,15 @@
 {
   "dependencies": {
     "hydra-synth": "^1.3.29"
-  }
+  },
+  "name": "website",
+  "description": "This project initializes Hydra sketches and manages switching between them on a webpage.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
