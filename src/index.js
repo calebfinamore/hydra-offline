@@ -68,6 +68,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         myCanvas.width = window.innerWidth;
         myCanvas.height = window.innerHeight;
 
+        // Automatically request fullscreen on startup
+        if (myCanvas.requestFullscreen) {
+            myCanvas.requestFullscreen();
+        } else if (myCanvas.webkitRequestFullscreen) { // Safari compatibility
+            myCanvas.webkitRequestFullscreen();
+        } else if (myCanvas.msRequestFullscreen) { // IE/Edge compatibility
+            myCanvas.msRequestFullscreen();
+        }
+
         // create a new Hydra Synth instance
         var hydra = new Hydra({
             canvas: myCanvas,
