@@ -4,8 +4,6 @@ Run a full set of Hydra live-coding visuals locally with audio reactivity.
 
 This project packages a series of Hydra patches into a lightweight local setup, making it suitable for installations, performances, or dedicated visual hardware. With some additional scripts, this can be set up to launch automatically on boot on a Raspberry Pi 5.
 
----
-
 ## Overview
 
 Hydra is an open-source, browser-based, live coding environment for real-time visuals by Olivia Jack. While it is typically used interactively in the browser, this project adapts it to run offline and automatically on a Raspberry Pi. You can learn more about Hydra here: https://hydra.ojack.xyz
@@ -20,8 +18,6 @@ The system:
 
 The result is a plug-and-play generative visual machine.
 
----
-
 ## Features
 
 * Audio-reactive visuals
@@ -29,8 +25,6 @@ The result is a plug-and-play generative visual machine.
 * Kiosk-mode fullscreen rendering
 * Automatic microphone recognition
 * Optimized for Raspberry Pi 5
-
----
 
 ## Hardware
 
@@ -40,8 +34,6 @@ This program can be run on any computer/microphone combo. However, it was built 
 * HifiBerry Studio ADC XLR
 * Shure SM57
 * ASUS VG27AQ
-
----
 
 ## Software Requirements
 
@@ -57,8 +49,6 @@ sudo apt update
 sudo apt install chromium-browser openbox unclutter python3
 ```
 
----
-
 ## Project Structure
 
 ```
@@ -69,8 +59,6 @@ hydra-offline-main/
 ├── scripts/          # optional helper scripts
 └── README.md
 ```
-
----
 
 ## Running the Visualizer
 
@@ -89,9 +77,8 @@ http://localhost:8080/index.html
 
 in Chromium.
 
----
-
-## Kiosk Mode (Auto Launch on Boot)
+## Optional Features
+### Kiosk Mode (Auto Launch on Boot)
 
 The system can automatically launch the visualizer at boot.
 
@@ -119,30 +106,39 @@ chromium \
   http://localhost:8080/index.html
 ```
 
----
+### Development Toggle
 
-## Development Mode
+If auto-launch is enabled, a toggle back to the main desktop can be added.
 
-To edit visuals:
+```bash
+#!/bin/bash
 
-1. Exit kiosk mode
-2. Modify `index.html`
-3. Restart the server or refresh Chromium
+MODE_FILE="$HOME/.hydra-mode"
+CURRENT=$(cat "$MODE_FILE" 2>/dev/null | tr -d '\n')
 
-You can also run Hydra patches directly in the browser for rapid experimentation.
-
----
+if [[ "$CURRENT" == "visual" ]]; then
+  echo "dev" > "$MODE_FILE"
+  cp ~/.xinitrc.dev ~/.xinitrc
+  sudo systemctl set-default graphical.target
+  echo "🛠 switched to DEV mode: will boot to full desktop. reboot to apply."
+else
+  echo "visual" > "$MODE_FILE"
+  cp ~/.xinitrc.visual ~/.xinitrc
+  sudo systemctl set-default multi-user.target
+  echo "🌀 switched to VISUAL mode: will boot to hydra kiosk. reboot to apply."
+fi
+```
 
 ## Performance Notes
 
 For best results on Raspberry Pi:
 
-* Use **Chromium instead of Firefox**
+* Use Chromium instead of Firefox
 * Disable screen blanking and DPMS
 * Avoid very high oscillator counts
 * Reduce feedback recursion where possible
 
-Hydra visuals rely heavily on **WebGL**, so GPU acceleration is important.
+Hydra visuals rely heavily on WebGL, so GPU acceleration is important.
 
 ---
 
